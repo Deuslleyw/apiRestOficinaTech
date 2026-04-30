@@ -1,3 +1,6 @@
 spring:
   application:
     name: apiOficina
+
+  profiles:
+      active: test
