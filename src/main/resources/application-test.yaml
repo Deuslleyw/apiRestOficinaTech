@@ -1,3 +1,6 @@
+server:
+  port: 8081
+
 spring:
   h2:
     console:
@@ -6,7 +9,7 @@ spring:
 
   datasource:
     url: jdbc:h2:mem:testeDB
-    username: cond
+    username: garage
     password:
     driver-class-name: org.h2.Driver
 

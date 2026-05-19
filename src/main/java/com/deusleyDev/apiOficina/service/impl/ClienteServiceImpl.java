@@ -31,7 +31,11 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public List<ClienteResponse> findAll() {
-        return List.of();
+
+        var list  = clienteRepository.findAll();
+        var response =  list.stream().map(clienteMapper::toResponse).toList();
+
+        return response;
     }
 
     @Override
