@@ -30,8 +30,12 @@ public class ClienteController {
         List<ClienteResponse> lista = clienteService.findAll();
         return ResponseEntity.ok(lista);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<ClienteResponse> findByid(@PathVariable Long id){
+        var clienteIdResponse = clienteService.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(clienteIdResponse);
 
-
+    }
 
 
 }

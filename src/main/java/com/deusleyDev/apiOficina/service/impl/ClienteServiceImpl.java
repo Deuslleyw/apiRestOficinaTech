@@ -40,7 +40,10 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public ClienteResponse findById(Long id) {
-        return null;
+
+        var cliente  = clienteRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Cliente não encontrado! "));
+        return clienteMapper.toResponse(cliente);
     }
 
     @Override
