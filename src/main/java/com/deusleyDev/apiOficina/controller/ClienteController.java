@@ -37,5 +37,14 @@ public class ClienteController {
 
     }
 
-
+    @PutMapping("/{id}")
+    public ResponseEntity<ClienteResponse> update(@PathVariable Long id, @RequestBody ClienteRequest request){
+        var clienteUpResponse = clienteService.update(id, request);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(clienteUpResponse);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        clienteService.delete(id);
+        return ResponseEntity.noContent().build();
+}
 }

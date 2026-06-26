@@ -48,11 +48,23 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public ClienteResponse update(Long id, ClienteRequest clienteRequest) {
-        return null;
+
+        var cliente  =  clienteRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Erro ao atualizar, cliente não encontrado!"));
+        cliente.setNome(clienteRequest.nome());
+        cliente.setTelefone(clienteRequest.telefone());
+        cliente.setEmail(clienteRequest.email());
+
+        var clienteAtualizado = clienteRepository.save(cliente);
+
+        return clienteMapper.toResponse(clienteAtualizado);
     }
 
     @Override
     public void delete(Long id) {
+        var cliente  = clienteRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Erro ao deletar, Cliente não encontrado"));
+        clienteRepository.delete(cliente);
 
     }
 }
