@@ -60,10 +60,11 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void cancelar(Long id) {
         var ordemServico = ordemServicoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Erro ao deletar, ordem de serviço não encontrada!"));
-        ordemServicoRepository.delete(ordemServico);
+                .orElseThrow(() -> new RuntimeException("Ordem de serviço não encontrada!"));
+        ordemServico.setStatus(StatusOrdem.CANCELADA);
+        ordemServicoRepository.save(ordemServico);
     }
 
     }

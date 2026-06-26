@@ -11,5 +11,5 @@ public interface OrdemServicoService {
     List<OrdemServicoResponse> findAll();
     OrdemServicoResponse findById(Long id);
     OrdemServicoResponse update(Long id, OrdemServicoRequest request);
-    void delete(Long id);
+    void cancelar(Long id);
 }

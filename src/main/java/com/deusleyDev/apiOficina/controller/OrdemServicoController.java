@@ -43,9 +43,9 @@ public class OrdemServicoController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        ordemServicoService.delete(id);
+    @PatchMapping("/{id}/cancelar")
+    public ResponseEntity<Void> cancelar(@PathVariable Long id) {
+        ordemServicoService.cancelar(id);
         return ResponseEntity.noContent().build();
     }
 
