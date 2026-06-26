@@ -17,11 +17,15 @@ public class OrdemServico {
 
     private String descricao;
     private Double valor;
+
+    @Enumerated(EnumType.STRING)
     private String status;
 
     @ManyToOne
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
     @ManyToOne
+    @JoinColumn(name = "veiculo_id")
     private Veiculo veiculo;
 }
