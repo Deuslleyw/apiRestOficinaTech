@@ -3,6 +3,7 @@ package com.deusleyDev.apiOficina.service.impl;
 import com.deusleyDev.apiOficina.Dto.ordemServico.OrdemServicoRequest;
 import com.deusleyDev.apiOficina.Dto.ordemServico.OrdemServicoResponse;
 import com.deusleyDev.apiOficina.enuns.StatusOrdem;
+import com.deusleyDev.apiOficina.exceptions.OrdenServicoNotFoundException;
 import com.deusleyDev.apiOficina.mapper.OrderMapper;
 import com.deusleyDev.apiOficina.repositories.OrdemServicoRepository;
 import com.deusleyDev.apiOficina.service.OrdemServicoService;
@@ -39,7 +40,7 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
     @Override
     public OrdemServicoResponse findById(Long id) {
         var ordemServico = ordemServicoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ordem de serviço não encontrada!"));
+                .orElseThrow(() -> new OrdenServicoNotFoundException("Ordem de serviço não encontrada!"));
         return orderMapper.toResponse(ordemServico);
     }
 
@@ -47,7 +48,7 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
     public OrdemServicoResponse update(Long id, OrdemServicoRequest request) {
 
         var ordemServico = ordemServicoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Erro ao atualizar, ordem de serviço não encontrada!"));
+                .orElseThrow(() -> new OrdenServicoNotFoundException("Erro ao atualizar, ordem de serviço não encontrada!"));
         ordemServico.setDescricao(request.descricao());
         ordemServico.setValor(request.valor());
         ordemServico.setStatus(request.status());
@@ -62,7 +63,7 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
     @Override
     public void cancelar(Long id) {
         var ordemServico = ordemServicoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ordem de serviço não encontrada!"));
+                .orElseThrow(() -> new OrdenServicoNotFoundException("Ordem de serviço não encontrada!"));
         ordemServico.setStatus(StatusOrdem.CANCELADA);
         ordemServicoRepository.save(ordemServico);
     }

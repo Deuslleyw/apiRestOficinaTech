@@ -13,11 +13,29 @@ public class ResourceExceptionHandler {
 
     @ExceptionHandler(ClienteNotFoundException.class)
     public ResponseEntity<StandardError> clienteNotFound(
-            ClienteNotFoundException error, HttpServletRequest request){
-        StandardError er = new  StandardError(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), error.getMessage(),
+            ClienteNotFoundException error, HttpServletRequest request) {
+        StandardError er = new StandardError(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), error.getMessage(),
                 request.getRequestURI());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(er);
 
     }
 
+    @ExceptionHandler(VeiculoNotFoundException.class)
+    public ResponseEntity<StandardError> veiculoNotFound(
+            VeiculoNotFoundException error, HttpServletRequest request) {
+        StandardError er = new StandardError(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), error.getMessage(),
+                request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(er);
+
+    }
+
+    @ExceptionHandler(OrdenServicoNotFoundException.class)
+    public ResponseEntity<StandardError> ordemServicoNotFound(
+            OrdenServicoNotFoundException error, HttpServletRequest request) {
+        StandardError er = new StandardError(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), error.getMessage(),
+                request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(er);
+
+
+    }
 }

@@ -2,6 +2,7 @@ package com.deusleyDev.apiOficina.service.impl;
 
 import com.deusleyDev.apiOficina.Dto.cliente.ClienteRequest;
 import com.deusleyDev.apiOficina.Dto.cliente.ClienteResponse;
+import com.deusleyDev.apiOficina.exceptions.ClienteNotFoundException;
 import com.deusleyDev.apiOficina.mapper.ClienteMapper;
 import com.deusleyDev.apiOficina.repositories.ClienteRepository;
 import com.deusleyDev.apiOficina.service.ClienteService;
@@ -42,7 +43,7 @@ public class ClienteServiceImpl implements ClienteService {
     public ClienteResponse findById(Long id) {
 
         var cliente  = clienteRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Cliente não encontrado! "));
+                .orElseThrow(()-> new ClienteNotFoundException("Cliente não encontrado! "));
         return clienteMapper.toResponse(cliente);
     }
 
@@ -50,7 +51,7 @@ public class ClienteServiceImpl implements ClienteService {
     public ClienteResponse update(Long id, ClienteRequest clienteRequest) {
 
         var cliente  =  clienteRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Erro ao atualizar, cliente não encontrado!"));
+                .orElseThrow(()-> new ClienteNotFoundException("Erro ao atualizar, cliente não encontrado!"));
         cliente.setNome(clienteRequest.nome());
         cliente.setTelefone(clienteRequest.telefone());
         cliente.setEmail(clienteRequest.email());
@@ -63,7 +64,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public void delete(Long id) {
         var cliente  = clienteRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Erro ao deletar, Cliente não encontrado"));
+                .orElseThrow(()-> new ClienteNotFoundException("Erro ao deletar, Cliente não encontrado"));
         clienteRepository.delete(cliente);
 
     }
