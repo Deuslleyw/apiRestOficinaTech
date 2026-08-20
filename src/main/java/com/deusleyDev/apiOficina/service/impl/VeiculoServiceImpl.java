@@ -2,8 +2,10 @@ package com.deusleyDev.apiOficina.service.impl;
 
 import com.deusleyDev.apiOficina.Dto.veiculo.VeiculoRequest;
 import com.deusleyDev.apiOficina.Dto.veiculo.VeiculoResponse;
+import com.deusleyDev.apiOficina.exceptions.DataIntegrityViolationException;
 import com.deusleyDev.apiOficina.exceptions.VeiculoNotFoundException;
 import com.deusleyDev.apiOficina.mapper.VeiculoMapper;
+import com.deusleyDev.apiOficina.repositories.ClienteRepository;
 import com.deusleyDev.apiOficina.repositories.VeiculoRepository;
 import com.deusleyDev.apiOficina.service.VeiculoService;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +20,15 @@ public class VeiculoServiceImpl  implements VeiculoService {
 
     private final VeiculoMapper veiculoMapper;
     private final VeiculoRepository veiculoRepository;
+    private final ClienteRepository clienteRepository;
 
 
     @Override
     public VeiculoResponse create(VeiculoRequest veiculoRequest) {
+
+        clienteRepository.findById(veiculoRequest.clienteId())
+                .orElseThrow(()-> new DataIntegrityViolationException(
+                        "Cliente não encontrado como o id: " + veiculoRequest.clienteId()));
 
         var veiculo = veiculoMapper.toEntity(veiculoRequest);
         var veiculoSalvo = veiculoRepository.save(veiculo);
@@ -46,6 +53,9 @@ public class VeiculoServiceImpl  implements VeiculoService {
     public VeiculoResponse update(Long id, VeiculoRequest request) {
         var veiculo = veiculoRepository.findById(id)
                 .orElseThrow(() -> new VeiculoNotFoundException("Erro ao atualizar, veículo não encontrado!"));
+        clienteRepository.findById(request.clienteId())
+                .orElseThrow(() -> new DataIntegrityViolationException("Cliente não encontrado com id: "
+                                                                       + request.clienteId()));
         veiculo.setMarca(request.marca());
         veiculo.setModelo(request.modelo());
         veiculo.setPlaca(request.placa());

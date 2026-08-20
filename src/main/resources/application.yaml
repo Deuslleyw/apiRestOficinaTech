@@ -3,4 +3,4 @@ spring:
     name: apiOficina
 
   profiles:
-      active: test
+      active: dev
