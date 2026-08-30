@@ -6,6 +6,7 @@ import com.deusleyDev.apiOficina.exceptions.DataIntegrityViolationException;
 import com.deusleyDev.apiOficina.exceptions.VeiculoNotFoundException;
 import com.deusleyDev.apiOficina.mapper.VeiculoMapper;
 import com.deusleyDev.apiOficina.repositories.ClienteRepository;
+import com.deusleyDev.apiOficina.repositories.OrdemServicoRepository;
 import com.deusleyDev.apiOficina.repositories.VeiculoRepository;
 import com.deusleyDev.apiOficina.service.VeiculoService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class VeiculoServiceImpl  implements VeiculoService {
     private final VeiculoMapper veiculoMapper;
     private final VeiculoRepository veiculoRepository;
     private final ClienteRepository clienteRepository;
+    private final OrdemServicoRepository ordemServicoRepository;
 
 
     @Override
@@ -68,6 +70,11 @@ public class VeiculoServiceImpl  implements VeiculoService {
     public void delete(Long id) {
         var veiculo = veiculoRepository.findById(id)
                 .orElseThrow(() -> new VeiculoNotFoundException("Erro ao deletar, veículo não encontrado!"));
+
+        if (ordemServicoRepository.existsByVeiculoId(id))
+            throw new DataIntegrityViolationException(
+                    "Veículo possui ordens de serviço vinculadas e não pode ser excluído");
+
         veiculoRepository.delete(veiculo);
 
     }
