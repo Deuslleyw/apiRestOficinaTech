@@ -3,6 +3,7 @@ package com.deusleyDev.apiOficina.controller;
 import com.deusleyDev.apiOficina.Dto.cliente.ClienteRequest;
 import com.deusleyDev.apiOficina.Dto.cliente.ClienteResponse;
 import com.deusleyDev.apiOficina.service.ClienteService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class ClienteController {
 
 
     @PostMapping
-    public ResponseEntity<ClienteResponse> criar (@RequestBody ClienteRequest request){
+    public ResponseEntity<ClienteResponse> criar (@RequestBody @Valid ClienteRequest request){
         var clienteResponse = clienteService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteResponse);
     }
@@ -31,14 +32,14 @@ public class ClienteController {
         return ResponseEntity.ok(lista);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<ClienteResponse> findByid(@PathVariable Long id){
+    public ResponseEntity<ClienteResponse> findByid(@PathVariable  Long id){
         var clienteIdResponse = clienteService.findById(id);
         return ResponseEntity.status(HttpStatus.OK).body(clienteIdResponse);
 
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClienteResponse> update(@PathVariable Long id, @RequestBody ClienteRequest request){
+    public ResponseEntity<ClienteResponse> update(@PathVariable @Valid Long id, @RequestBody ClienteRequest request){
         var clienteUpResponse = clienteService.update(id, request);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(clienteUpResponse);
     }

@@ -3,6 +3,7 @@ package com.deusleyDev.apiOficina.controller;
 import com.deusleyDev.apiOficina.Dto.ordemServico.OrdemServicoRequest;
 import com.deusleyDev.apiOficina.Dto.ordemServico.OrdemServicoResponse;
 import com.deusleyDev.apiOficina.service.OrdemServicoService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class OrdemServicoController {
 
 
     @PostMapping
-    public ResponseEntity<OrdemServicoResponse> criar(@RequestBody OrdemServicoRequest request) {
+    public ResponseEntity<OrdemServicoResponse> criar(@RequestBody @Valid OrdemServicoRequest request) {
         var response = ordemServicoService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -38,7 +39,7 @@ public class OrdemServicoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OrdemServicoResponse> update(@PathVariable Long id, @RequestBody OrdemServicoRequest request) {
+    public ResponseEntity<OrdemServicoResponse> update(@PathVariable @Valid Long id, @RequestBody OrdemServicoRequest request) {
         var response = ordemServicoService.update(id, request);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }

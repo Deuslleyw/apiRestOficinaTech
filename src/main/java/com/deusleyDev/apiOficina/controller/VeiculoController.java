@@ -3,6 +3,7 @@ package com.deusleyDev.apiOficina.controller;
 import com.deusleyDev.apiOficina.Dto.veiculo.VeiculoRequest;
 import com.deusleyDev.apiOficina.Dto.veiculo.VeiculoResponse;
 import com.deusleyDev.apiOficina.service.VeiculoService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class VeiculoController {
     private final VeiculoService veiculoService;
 
     @PostMapping
-    public ResponseEntity<VeiculoResponse> criar(@RequestBody VeiculoRequest request) {
+    public ResponseEntity<VeiculoResponse> criar(@RequestBody @Valid VeiculoRequest request) {
         var response = veiculoService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -36,7 +37,7 @@ public class VeiculoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<VeiculoResponse> update(@PathVariable Long id, @RequestBody VeiculoRequest request) {
+    public ResponseEntity<VeiculoResponse> update(@PathVariable @Valid Long id, @RequestBody VeiculoRequest request) {
         var response = veiculoService.update(id, request);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }

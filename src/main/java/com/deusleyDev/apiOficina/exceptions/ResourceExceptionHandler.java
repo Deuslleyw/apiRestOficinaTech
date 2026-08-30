@@ -3,10 +3,12 @@ package com.deusleyDev.apiOficina.exceptions;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
@@ -46,6 +48,19 @@ public class ResourceExceptionHandler {
                 request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(er);
 
+
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<StandardError> methodArgumentNotValid(
+            MethodArgumentNotValidException error, HttpServletRequest request) {
+        var mensagem = error.getBindingResult().getFieldErrors()
+                .stream()
+                .map(f -> f.getField() + ": " + f.getDefaultMessage())
+                .collect(Collectors.joining(", "));
+        StandardError er = new StandardError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
+                mensagem, request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(er);
 
     }
 }
