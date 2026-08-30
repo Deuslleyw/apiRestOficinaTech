@@ -44,7 +44,7 @@ public class ResourceExceptionHandler {
             DataIntegrityViolationException error, HttpServletRequest request) {
         StandardError er = new StandardError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), error.getMessage(),
                 request.getRequestURI());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(er);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(er);
 
 
     }

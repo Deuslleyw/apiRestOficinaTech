@@ -3,8 +3,10 @@ package com.deusleyDev.apiOficina.service.impl;
 import com.deusleyDev.apiOficina.Dto.cliente.ClienteRequest;
 import com.deusleyDev.apiOficina.Dto.cliente.ClienteResponse;
 import com.deusleyDev.apiOficina.exceptions.ClienteNotFoundException;
+import com.deusleyDev.apiOficina.exceptions.DataIntegrityViolationException;
 import com.deusleyDev.apiOficina.mapper.ClienteMapper;
 import com.deusleyDev.apiOficina.repositories.ClienteRepository;
+import com.deusleyDev.apiOficina.repositories.OrdemServicoRepository;
 import com.deusleyDev.apiOficina.service.ClienteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ public class ClienteServiceImpl implements ClienteService {
 
     private final ClienteRepository clienteRepository;
     private  final ClienteMapper clienteMapper;
+    private final OrdemServicoRepository ordemServicoRepository;
 
 
     @Override
@@ -65,6 +68,11 @@ public class ClienteServiceImpl implements ClienteService {
     public void delete(Long id) {
         var cliente  = clienteRepository.findById(id)
                 .orElseThrow(()-> new ClienteNotFoundException("Erro ao deletar, Cliente não encontrado"));
+
+        if (ordemServicoRepository.existsByClienteId(id)) {
+            throw new DataIntegrityViolationException(
+                    "Cliente possui ordens de serviço vinculadas e não pode ser excluído.");
+        }
         clienteRepository.delete(cliente);
 
     }

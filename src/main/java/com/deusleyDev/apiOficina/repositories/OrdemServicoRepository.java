@@ -7,4 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OrdemServicoRepository extends JpaRepository<OrdemServico, Long> {
 
+    boolean existsByClienteId(Long clienteId);
+    boolean existsByVeiculoId(Long veiculoId);
+
 }
