@@ -19,7 +19,7 @@ public record ClienteRequest(
         String email,
 
         @NotBlank(message = "Cpf é obrigatório")
-        @CPF(message = "CPF inválido")
+        @CPF(message = "CPF inválido, verifique e tente novamente!")
         String cpf
 
 ) {
