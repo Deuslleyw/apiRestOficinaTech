@@ -1,5 +1,6 @@
 package com.deusleyDev.apiOficina.Dto.cliente;
 
+import com.deusleyDev.apiOficina.util.Phone;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -12,7 +13,7 @@ public record ClienteRequest(
         String nome,
 
         @NotBlank(message = "Telefone é obrigatório")
-        @Size (min = 10, max = 15, message = "Deve conter entre 10 a 15 caracteres")
+        @Phone
         String telefone,
 
         @Email (message = "Email inválido, tente novamente")
