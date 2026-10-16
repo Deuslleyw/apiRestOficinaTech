@@ -29,5 +29,11 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+
+### Sensitive files ###
+application-dev.yml
+application-prod.yml
+.env
+
 ### VS Code ###
 .vscode/
