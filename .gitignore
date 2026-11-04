@@ -33,7 +33,6 @@ build/
 
 ### Sensitive files ###
 application-dev.yml
-application-prod.yml
 .env
 
 ### VS Code ###

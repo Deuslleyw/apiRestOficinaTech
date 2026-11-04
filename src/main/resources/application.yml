@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: apiOficina
+
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+
+server:
+  port: ${PORT:8081}
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: 86400000
+
+admin:
+  nome: ${ADMIN_NOME:Administrador}
+  email: ${ADMIN_EMAIL}
+  senha: ${ADMIN_SENHA}
+
+cors:
+  allowed-origins: ${CORS_ORIGINS:http://localhost:4200}
